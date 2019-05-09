@@ -1,0 +1,239 @@
+@import 'fonts.scss';
+@import 'variables.scss';
+
+html, body {
+	background: $grey;
+}
+
+.todo {
+	text-align: center;
+}
+
+h1 {
+	color: white;
+	font-family: "Roboto Slab";
+	font-size: 48px;
+	text-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.nomore {
+	color: black;
+	font-family: "Roboto Slab";
+	font-weight: 900;
+	font-size: 40px;
+}
+
+.list-wrap {
+	display: block;
+	margin: 0 auto;
+	width: 100%;
+	max-width: 500px;
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+}
+
+.btn-add {
+	display: inline-block;
+	background: $green;
+	border: none;
+	padding: 20px;
+	font-family: "Roboto Slab";
+	color: white;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 18px;
+	border-radius: 5px;
+	transition: all .3s;
+	cursor: pointer;
+	margin: 20px 0;
+	&:hover {
+		box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+		background: $yellow;
+	}
+}
+
+.status {
+	display: inline-block;
+	vertical-align: top;
+	height: 20px;
+	width: 20px;
+	margin-right: 10px;
+	position: relative;
+	cursor: pointer;
+	&:before {
+		font-family: "Font Awesome 5 Free";
+		font-weight: 900;
+		content: "\f00c";
+		width: 20px;
+		line-height: 20px;
+		text-align: center;
+		color: $grey;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+		transition: color .3s;
+	}
+}
+
+.task {
+	text-align: left;
+	display: block;
+	padding: 20px;
+	width: calc(100% - 40px);
+	margin: 0 0 20px 0;
+	background: white;
+	border-radius: 5px;
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+	font-family: "Roboto";
+	line-height: 20px;
+	position: relative;
+	animation: task-in 0.3s linear forwards;
+	&.complete {
+		.status:before {
+			color: $green;
+		}
+	}
+}
+
+.remove {
+	display: inline-block;
+	position: relative;
+	float: right;
+	height: 20px;
+	width: 20px;
+	cursor: pointer;
+	&:before {
+		font-family: "Font Awesome 5 Free";
+		font-weight: 900;
+		content: "\f2ed";
+		width: 20px;
+		line-height: 20px;
+		text-align: center;
+		color: $grey;
+		position: absolute;
+		top: 0;
+		left: 0;
+		transition: color .3s;
+	}
+	&:hover {
+		&:before {
+			color: $orange;
+		}
+	}
+}
+
+.addOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	transform: scale(0);
+	.cover {
+		width: 100vw;
+		height: 100vh;
+		background: rgba(0,0,0,0.5);
+		opacity: 0;
+		transition: opacity 0.3s;
+	}
+	.content {
+		position: absolute;
+		background: $grey;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%) scale(0);
+		padding: 30px;
+		transition: all .3s;
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0,0,0,0.5);
+		width: calc(100% - 80px);
+		max-width: 300px;
+		h2 {
+			margin: 0 0 20px 0;
+			font-family: "Roboto Slab";
+			color: white;
+			text-shadow: 0 0 5px rgba(0,0,0,0.3);
+			font-size: 30px;
+		}
+		.close {
+			position: absolute;
+			top: -10px;
+			right: -10px;
+			width: 20px;
+			height: 20px;
+			background: white;
+			border-radius: 50%;
+			padding: 5px;
+			cursor: pointer;
+			transition: all .3s;
+			&:before {
+				font-family: "Font Awesome 5 Free";
+				font-weight: 900;
+				content: "\f00d";
+				width: 100%;
+				line-height: 30px;
+				text-align: center;
+				color: $grey;
+				position: absolute;
+				top: 0;
+				left: 0;
+				transition: color .3s;
+			}
+			&:hover {
+				background: $orange;
+				&:before {
+					color: white;
+				}
+			}
+		}
+		input {
+			display: block;
+			width: calc(100% - 20px);
+			border: none;
+			padding: 10px;
+			margin-bottom: 20px;
+			font-family: "Roboto";
+			&:focus {
+				outline: none;
+				box-shadow: 0 0 5px $green;
+			}
+		}
+		button {
+			display: inline-block;
+			background: $green;
+			border: none;
+			padding: 10px;
+			font-family: "Roboto Slab";
+			color: white;
+			font-weight: bold;
+			text-transform: uppercase;
+			font-size: 14px;
+			border-radius: 5px;
+			transition: all .3s;
+			cursor: pointer;
+			margin: 0;
+			&:hover {
+				box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+				background: $yellow;
+			}
+		}
+	}
+	&.open {
+		transform: scale(1);
+		.cover {
+			opacity: 1;
+		}
+		.content {
+			transform: translateX(-50%) translateY(-50%) scale(1);
+			opacity: 1;
+		}
+	}
+}
+
+@keyframes task-in {
+	0% { top: -20px; opacity: 0; }
+	100% { top: 0; opacity: 1; }
+}
